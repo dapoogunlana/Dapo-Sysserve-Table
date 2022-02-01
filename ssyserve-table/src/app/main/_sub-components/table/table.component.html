@@ -1,0 +1,36 @@
+<div class="all-controls">
+    <h2 *ngIf="title && loaderService.dataLoaded" class="text-center">{{ title }}</h2>
+    <div class="content-holder">
+        <table class="table-responsive" [title]="title || ''" *ngIf="loaderService.dataLoaded; else dataLoading">
+            <tr style="width: 100%;">
+                <th *ngFor="let cell of tableData.headerRow" class="emphasized">{{ cell }}</th>
+            </tr>
+            <tr style="width: 100%;" *ngFor="let row of tableData.dataRows">
+                <td *ngFor="let cell of row">{{ cell }}</td>
+            </tr>
+            <tr style="width: 100%;" *ngIf="calculateTotal">
+                <td *ngFor="let cell of total" class="emphasized">{{ cell }}</td>
+            </tr>
+        </table>
+        <ng-template #dataLoading>
+            <div class="loading-space">
+                <app-loader [customSize]="60"></app-loader>
+                <p class="text-center">Loading</p>
+            </div>
+        </ng-template>
+        <div class="pagination-spread" *ngIf="loaderService.dataLoaded && showPagination">
+            <span>Showing {{ displayRange.start }} to {{ displayRange.end }} of {{ this.tableData.settings.total }}</span>
+            <div class="count">
+                <div class="alter" [ngClass]="{'unclickable': this.tableData.settings.page <= 1 }"
+                (click)="changePage(false)">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="display" >{{ this.tableData.settings.page }}</div>
+                <div class="alter" [ngClass]="{'unclickable': this.tableData.settings.page >= pages }"
+                    (click)="changePage(true)">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
