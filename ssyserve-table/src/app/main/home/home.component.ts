@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
       this.setUpTableData(farmerPayload.payload.farmerList);
       this.farmerTableData.settings = {page: data.page, ...farmerPayload.payload.settings};
       this.loaderService.setLoaded();
-    }, 300);
+    }, 3000);
   }
 
   setUpTableData(data: IFarmerListInfo): void {
